@@ -5,7 +5,7 @@ class Ball_Trap_Brain:
         self.alphabet = alphabet
         self.alphabet_directions = self.choose_alphabet_direction(len(alphabet))
         self.alphabet_start_positions = self.start_positions(len(alphabet), deflectors)
-        self.deflectors_list = [(random.randint(0, deflectors-1), bounce) for i in range(deflectors)]
+        self.deflectors_list = [[random.randint(0, deflectors-1), bounce] for i in range(deflectors)]
         self.set_holes(alphabet, deflectors)
 
     def set_holes (self, alphabet, deflectors):
@@ -13,7 +13,7 @@ class Ball_Trap_Brain:
         for i in range(holes):
             self.deflectors_list[random.randint(0, deflectors-1)][1] = random.choice(alphabet)
 
-    def choose_alphabet_direction(alphabet):
+    def choose_alphabet_direction(self, alphabet):
         directions = []
         for i in range(alphabet):
             if random.choice([True, False]):
@@ -22,7 +22,7 @@ class Ball_Trap_Brain:
             directions.append('right')
         return directions
     
-    def start_positions(alphabet, deflectors):
+    def start_positions(self, alphabet, deflectors):
         positions = []
         for i in range(alphabet):
             position = random.randint(0, deflectors-1)
@@ -48,7 +48,7 @@ class Ball_Trap_Brain:
             if not isinstance(self.deflectors_list[travel[i]][1], int):
                 output.append(self.deflectors_list[travel[i]][1])
 
-        
+        return output
         
     def travel(self, directions, position, index):
         for i in range(len(directions)):
