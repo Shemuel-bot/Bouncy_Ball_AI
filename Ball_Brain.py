@@ -73,6 +73,7 @@ class Ball_Trap_Brain:
             self.ball_energy = ball_energy
         return output
 
+
     def travel(self, directions, position, index):
         for i in range(len(directions)):
             if i == index:
