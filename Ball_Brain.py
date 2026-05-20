@@ -30,7 +30,36 @@ class Ball_Trap_Brain:
         return positions
 
     def compute_input(self, input):
-        pass
+        directions = []
+        positions = []
+        travel = []
+        output = []
+
+        for i in input:
+            if i in self.alphabet:
+                index = self.alphabet.index(i)
+                directions.append(self.alphabet_directions[index])
+                positions.append(self.alphabet_start_positions[index])
+
+        for i in range(len(directions)):
+            travel.append(self.travel(directions, positions[i], i))
+
+        for i in range(len(travel)):
+            if not isinstance(self.deflectors_list[travel[i]][1], int):
+                output.append(self.deflectors_list[travel[i]][1])
+
+        
+        
+    def travel(self, directions, position, index):
+        for i in range(len(directions)):
+            if i == index:
+                continue
+            if directions[i] == 'left':
+                position -= 1
+            else:
+                position += 1
+        return position
+
     
 
     
