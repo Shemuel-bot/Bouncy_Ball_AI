@@ -100,3 +100,4 @@ class Ball_Trap_Brain:
             for i in range(len(self.alphabet_start_positions)):
                 if random.random() < probability:
                     self.alphabet_start_positions[i] = random.randint(0, len(self.deflectors_list)-1)
+        return self
