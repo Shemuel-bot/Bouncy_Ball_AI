@@ -25,11 +25,8 @@ class Ball_Trap_Brain:
         return directions
     
     def start_positions(self, alphabet, deflectors):
-        positions = []
-        for i in range(alphabet):
-            position = random.randint(0, deflectors-1)
-            positions.append(position)
-        return positions
+        return [random.randint(0, deflectors-1) for i in range(len(alphabet))]
+       
 
     def compute_input(self, input):
         directions = []
@@ -52,8 +49,8 @@ class Ball_Trap_Brain:
         output = []
         for i in range(len(travel)):
             new_idx = travel[i] if abs(travel[i]) < len(self.deflectors_list) else abs(travel[i]) % len(self.deflectors_list)
-            i = 0
-            while self.ball_energy > 0 and i < cap:
+            cap_idx = 0
+            while self.ball_energy > 0 and cap_idx < cap:
                 distance = abs(self.deflectors_list[new_idx][0] - new_idx)
                 
                 if not isinstance(self.deflectors_list[new_idx][1], int):

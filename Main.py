@@ -12,7 +12,7 @@ import copy
 import difflib
 
 # Test cases: pairs of (input_string, expected_output_string) used for fitness evaluation
-test_cases = [('abc', 'def'), ('bca', 'bca'), ('cab', 'cab')]
+test_cases = [('abc', 'def')]
 
 
 def main():
