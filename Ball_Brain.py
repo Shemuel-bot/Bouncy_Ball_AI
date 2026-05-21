@@ -35,7 +35,6 @@ class Ball_Trap_Brain:
         directions = []
         positions = []
         travel = []
-        output = []
 
         for i in input:
             if i in self.alphabet:
@@ -52,11 +51,11 @@ class Ball_Trap_Brain:
     def ricochet(self, travel, cap, ball_energy):
         output = []
         for i in range(len(travel)):
-            new_idx = travel[i]
+            new_idx = travel[i] if abs(travel[i]) < len(self.deflectors_list) else abs(travel[i]) % len(self.deflectors_list)
             i = 0
             while self.ball_energy > 0 and i < cap:
                 distance = abs(self.deflectors_list[new_idx][0] - new_idx)
-                print(f"Ball energy: {self.ball_energy}, Position: {new_idx}")
+                
                 if not isinstance(self.deflectors_list[new_idx][1], int):
                     output.append(self.deflectors_list[new_idx][1])
                     self.ball_energy += 1
@@ -89,14 +88,15 @@ class Ball_Trap_Brain:
             print(f"Deflector {i}: {deflect}")
 
     def Mutate(self, probability=0.1):
-        for i in range(len(self.deflectors_list)):
-            if random.random() < probability:
-                self.deflectors_list[i] = [random.randint(0, len(self.deflectors_list)-1), random.choice(self.alphabet)]
-        
-        for i in range(len(self.alphabet_directions)):
-            if random.random() < probability:
-                self.alphabet_directions[i] = random.choice(['left', 'right'])
-                
-        for i in range(len(self.alphabet_start_positions)):
-            if random.random() < probability:
-                self.alphabet_start_positions[i] = random.randint(0, len(self.deflectors_list)-1)
+        if random.random() < probability:
+            for i in range(len(self.deflectors_list)):
+                if random.random() < probability:
+                    self.deflectors_list[i] = [random.randint(0, len(self.deflectors_list)-1), random.choice(self.alphabet)]
+            
+            for i in range(len(self.alphabet_directions)):
+                if random.random() < probability:
+                    self.alphabet_directions[i] = random.choice(['left', 'right'])
+
+            for i in range(len(self.alphabet_start_positions)):
+                if random.random() < probability:
+                    self.alphabet_start_positions[i] = random.randint(0, len(self.deflectors_list)-1)
