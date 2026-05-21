@@ -25,7 +25,7 @@ class Ball_Trap_Brain:
         return directions
     
     def start_positions(self, alphabet, deflectors):
-        return [random.randint(0, deflectors-1) for i in range(len(alphabet))]
+        return [random.randint(0, deflectors-1) for i in range(alphabet)]
        
 
     def compute_input(self, input):
@@ -58,14 +58,14 @@ class Ball_Trap_Brain:
                     self.ball_energy += 1
                     self.ball_energy -= distance
                     new_idx = self.deflectors_list[new_idx][0]
-                    i += 1
+                    cap_idx += 1
                     continue
 
                 self.ball_energy += self.deflectors_list[new_idx][1]
                 self.ball_energy -= distance
 
                 new_idx = self.deflectors_list[new_idx][0]
-                i += 1
+                cap_idx += 1
             self.ball_energy = ball_energy
         return output
 

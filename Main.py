@@ -12,7 +12,7 @@ import copy
 import difflib
 
 # Test cases: pairs of (input_string, expected_output_string) used for fitness evaluation
-test_cases = [('abc', 'def')]
+test_cases = [('im a', ' bad boy')]
 
 
 def main():
@@ -23,12 +23,12 @@ def main():
         Ball_Trap_Brain: The best brain found after evolution.
     """
     # Evolution hyperparameters
-    generations = 100
+    generations = 500
     population_size = 100
 
     # Initialize population with random brains
     # Parameters: 10 deflectors, 2 bounce energy, alphabet of 6 characters
-    population = [Ball_Trap_Brain(10, 2, ['a', 'b', 'c', 'd', 'e', 'f']) for _ in range(population_size)]
+    population = [Ball_Trap_Brain(20, 2, ['a', 'b', 'c', 'd', 'e', 'f', 'i', 'm', 'y', 'o', ' ']) for _ in range(population_size)]
     best_individual = None
 
     # Run evolution loop
