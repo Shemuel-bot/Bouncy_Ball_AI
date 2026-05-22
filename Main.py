@@ -21,7 +21,11 @@ test_cases = [('#a', 'a'), ('#b', 'b'), ('#c', 'c'),
               ('#abc', 'abc'), ('#def', 'def'), ('#ghi', 'ghi'),
               ('#aaa', 'aaa'), ('#bbb', 'bbb'), ('#ccc', 'ccc'),
               ('#ddd', 'ddd'), ('#eee', 'eee'), ('#fff', 'fff'),
-              ('#ggg', 'ggg'), ('#hhh', 'hhh'), ('#iii', 'iii')]
+              ('#ggg', 'ggg'), ('#hhh', 'hhh'), ('#iii', 'iii'),
+              ('#abcd', 'abcd'), ('#efgh', 'efgh'), ('#ijkl', 'ijkl'),
+              ('#aaaa', 'aaaa'), ('#bbbb', 'bbbb'), ('#cccc', 'cccc'),
+              ('#dddd', 'dddd'), ('#eeee', 'eeee'), ('#ffff', 'ffff'),
+              ('#gggg', 'gggg'), ('#hhhh', 'hhhh'), ('#iiii', 'iiii')]
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '#']
 
 def main():
@@ -32,7 +36,7 @@ def main():
         Ball_Trap_Brain: The best brain found after evolution.
     """
     # Evolution hyperparameters
-    generations = 100000
+    generations = 10000
     population_size = 100
 
     # Initialize population with random brains
@@ -52,7 +56,7 @@ def main():
             break
 
         # Create next generation by mutating the best brain multiple times
-        new_population = [copy.deepcopy(best_individual).Mutate(0.05) for _ in range(population_size)]
+        new_population = [copy.deepcopy(best_individual).Mutate(0.1, 0.05) for _ in range(population_size)]
         population = new_population
         print(f"Generation {generation}: Best fitness = {best_fitness}")
     

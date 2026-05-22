@@ -85,8 +85,8 @@ class Ball_Trap_Brain:
         for i, deflect in enumerate(self.deflectors_list):
             print(f"Deflector {i}: {deflect}")
 
-    def Mutate(self, probability=0.1):
-        if random.random() < probability:
+    def Mutate(self, individual_probability=0.1, probability=0.05):
+        if random.random() < individual_probability:
             for i in range(len(self.deflectors_list)):
                 if random.random() < probability:
                     self.deflectors_list[i] = [random.randint(0, len(self.deflectors_list)-1), random.choice(self.alphabet)]
