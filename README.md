@@ -1,80 +1,71 @@
 # Bouncy_Ball_AI
 
-A Python project that uses evolutionary algorithms to evolve a bouncing ball neural network (`Ball_Trap_Brain`) to produce desired outputs from given inputs. The system simulates a ball ricocheting through randomized deflectors, using genetic mutation to improve brain configurations across generations.
+A Python project that evolves a simple bouncing-ball brain using a genetic algorithm. The brain is represented by a network of randomized deflectors, and the system learns to convert input strings into target output strings by evolving the deflector configuration.
 
-## Project structure
+## Repository files
 
-- `Main.py` - genetic algorithm runner that evolves a population of `Ball_Trap_Brain` instances over multiple generations.
-- `Ball_Brain.py` - implementation of the `Ball_Trap_Brain` class and the bouncing ball logic.
-- `Evaluation.py` - fitness evaluation system that tests evolved brains against test cases.
+- `Main.py` - runs the genetic algorithm, evaluates a population, and evolves the best performing brain.
+- `Ball_Brain.py` - defines the `Ball_Trap_Brain` class, including ball travel, ricochet behavior, and mutation.
+- `Evaluation.py` - evaluates brain output fitness using string similarity over a set of test cases.
 
-## Features
+## How it works
 
-- **Genetic Algorithm**: Evolves a population of brains over multiple generations
-- **Fitness Evaluation**: Compares brain outputs against expected test cases using string similarity metrics
-- **Mutation Mechanism**: Random mutations applied to brain configurations during reproduction
-- **Ball Physics**: Randomized deflectors and travel paths with alphabet-based input mapping
-- **Recursive Ricochet**: Ball bouncing simulation with energy tracking
-- **Character Output**: Output collection when a ball lands on a deflector containing a character value
+1. `Main.py` builds a population of `Ball_Trap_Brain` instances.
+2. Each brain maps input characters to start positions and movement directions.
+3. The brain simulates ball travel through deflectors.
+4. When a ball lands on a deflector containing a character, that character is added to the output.
+5. `Evaluation.py` scores outputs against expected results using `difflib.SequenceMatcher`.
+6. The best brain is mutated to form the next generation.
 
 ## Requirements
 
-- Python 3
+- Python 3.x
 
 ## Usage
 
-Run the evolutionary algorithm from the repository root:
+From the repository root, run:
 
 ```bash
 python3 Main.py
 ```
 
-This will:
+The script will evolve a population of brains and print the best fitness each generation. Once the evolutionary loop completes, it enters an interactive prompt where you can type input text and see the brain's computed output.
 
-1. Initialize a population of 100 randomized `Ball_Trap_Brain` instances
-2. Run for up to 100 generations, evaluating fitness on predefined test cases
-3. Apply mutations to create offspring from the best-performing brain each generation
-4. Stop early if a perfect solution (fitness = 1.0) is found
+## Configuration
 
-## Test Cases
-
-The algorithm evolves brains to pass the following test cases (input → expected output):
-
-- `'abc'` → `'def'`
-- `'bca'` → `'bca'`
-- `'cab'` → `'cab'`
-
-Fitness is measured using string similarity between the brain's output and expected output.
-
-## Customization
-
-You can modify the evolution parameters in `Main.py`:
+In `Main.py`, key parameters include:
 
 ```python
-generations = 100          # Number of generations to evolve
-population_size = 100      # Number of brains per generation
+generations = 100000
+population_size = 100
 ```
 
-And adjust the brain configuration:
+`Ball_Trap_Brain` is instantiated as:
 
 ```python
-Ball_Trap_Brain(10, 2, ['a', 'b', 'c', 'd', 'e', 'f'])
-# Arguments: deflectors, bounce energy, alphabet
+Ball_Trap_Brain(100, 2, alphabet, holes_multiplier=2)
 ```
 
-Modify `test_cases` in `Main.py` to evolve for different input/output mappings.
+- `100` = number of deflectors
+- `2` = base bounce energy
+- `alphabet` = list of supported input/output characters
+- `holes_multiplier` = number of character-containing deflectors relative to alphabet size
 
-## How It Works
+## Test cases
 
-1. **Initialization**: Each brain has randomized deflectors, starting positions, and directions for each alphabet character
-2. **Input Processing**: Input characters are mapped to starting positions and directions
-3. **Ball Ricochet**: A ball travels through the deflector maze, bouncing until its energy depletes
-4. **Output Generation**: Characters encountered on deflectors with character values are collected as output
-5. **Evaluation**: Output is compared to expected results using string similarity (SequenceMatcher ratio)
-6. **Evolution**: The best-performing brain is mutated to create the next generation
+The current `test_cases` in `Main.py` include combinations such as:
+
+- `#a` → `a`
+- `#b` → `b`
+- `#abc` → `abc`
+- `#def` → `def`
+- `#ghi` → `ghi`
+
+These are used to measure how closely the brain's output matches expected strings.
 
 ## Notes
 
-- Output may vary between runs due to random initialization and mutations
-- The system continues evolving until either a perfect solution is found or max generations is reached
-- Mutation randomly changes deflector configurations of the best brain to explore the solution space
+- The algorithm is stochastic, so results vary between runs.
+- Evolution may take many generations to improve fitness, especially with a large alphabet.
+- `Ball_Trap_Brain.compute_input()` returns a list of output characters; `Main.py` joins that list before printing.
+- The interactive prompt continues until interrupted with `Ctrl+C`.

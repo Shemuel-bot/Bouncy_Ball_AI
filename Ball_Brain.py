@@ -2,16 +2,17 @@ import random
 import math
 
 class Ball_Trap_Brain:
-    def __init__(self, deflectors, bounce, alphabet):
+    def __init__(self, deflectors, bounce, alphabet, holes_multiplier=1):
+        self.holes_multiplier = holes_multiplier
         self.ball_energy = bounce*2
         self.alphabet = alphabet
         self.alphabet_directions = self.choose_alphabet_direction(len(alphabet))
         self.alphabet_start_positions = self.start_positions(len(alphabet), deflectors)
         self.deflectors_list = [[random.randint(0, deflectors-1), bounce] for i in range(deflectors)]
-        self.set_holes(alphabet, deflectors)
+        self.set_holes(alphabet, deflectors, self.holes_multiplier)
 
-    def set_holes (self, alphabet, deflectors):
-        holes = len(alphabet)
+    def set_holes (self, alphabet, deflectors, holes_multiplier):
+        holes = len(alphabet) * holes_multiplier
         for i in range(holes):
             self.deflectors_list[random.randint(0, deflectors-1)][1] = random.choice(alphabet)
 
@@ -97,4 +98,8 @@ class Ball_Trap_Brain:
             for i in range(len(self.alphabet_start_positions)):
                 if random.random() < probability:
                     self.alphabet_start_positions[i] = random.randint(0, len(self.deflectors_list)-1)
+                    
+            if random.random() < probability:
+                self.set_holes(self.alphabet, len(self.deflectors_list), self.holes_multiplier)
+
         return self
