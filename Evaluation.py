@@ -26,7 +26,7 @@ def evaluate_performance(input_val, answer, brain):
         float: Fitness score (0 to 1) where 1.0 is a perfect match.
     """
     output = brain.compute_input(input_val)
-    return difflib.SequenceMatcher(None, output, answer).ratio()
+    return 1 if ''.join(output) == answer else 0
 
 
 def evaluate_population(population, test_cases):

@@ -10,23 +10,11 @@ from Ball_Brain import Ball_Trap_Brain
 import Evaluation
 import copy
 import difflib
+from Dataset import test_cases
 
 # Test cases: pairs of (input_string, expected_output_string) used for fitness evaluation
-test_cases = [('#a', 'a'), ('#b', 'b'), ('#c', 'c'), 
-              ('#d', 'd'), ('#e', 'e'), ('#f', 'f'), 
-              ('#g', 'g'), ('#h', 'h'), ('#i', 'i'),
-              ('#aa', 'aa'), ('#bb', 'bb'), ('#cc', 'cc'),
-              ('#dd', 'dd'), ('#ee', 'ee'), ('#ff', 'ff'),
-              ('#gg', 'gg'), ('#hh', 'hh'), ('#ii', 'ii'),
-              ('#abc', 'abc'), ('#def', 'def'), ('#ghi', 'ghi'),
-              ('#aaa', 'aaa'), ('#bbb', 'bbb'), ('#ccc', 'ccc'),
-              ('#ddd', 'ddd'), ('#eee', 'eee'), ('#fff', 'fff'),
-              ('#ggg', 'ggg'), ('#hhh', 'hhh'), ('#iii', 'iii'),
-              ('#abcd', 'abcd'), ('#efgh', 'efgh'), ('#ijkl', 'ijkl'),
-              ('#aaaa', 'aaaa'), ('#bbbb', 'bbbb'), ('#cccc', 'cccc'),
-              ('#dddd', 'dddd'), ('#eeee', 'eeee'), ('#ffff', 'ffff'),
-              ('#gggg', 'gggg'), ('#hhhh', 'hhhh'), ('#iiii', 'iiii')]
-alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '#']
+
+alphabet = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '-']  # Define the alphabet used in the brains
 
 def main():
     """
@@ -41,7 +29,7 @@ def main():
 
     # Initialize population with random brains
     # Parameters: 10 deflectors, 2 bounce energy, alphabet of 6 characters
-    population = [Ball_Trap_Brain(100, 2, alphabet, holes_multiplier=2) for _ in range(population_size)]
+    population = [Ball_Trap_Brain(100, 3, alphabet, holes_multiplier=2) for _ in range(population_size)]
     best_individual = None
 
     # Run evolution loop
@@ -56,7 +44,7 @@ def main():
             break
 
         # Create next generation by mutating the best brain multiple times
-        new_population = [copy.deepcopy(best_individual).Mutate(0.1, 0.05) for _ in range(population_size)]
+        new_population = [copy.deepcopy(best_individual).Mutate(0.9, 0.025) for _ in range(population_size)]
         population = new_population
         print(f"Generation {generation}: Best fitness = {best_fitness}")
     
